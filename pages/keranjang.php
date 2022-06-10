@@ -4,7 +4,7 @@ require_once('../layout/navbar.php');
 $id_user = $_SESSION['id'];
 $get_customer = mysqli_fetch_array(mysqli_query($koneksi,"SELECT * from customer where id_user='$id_user'"));
 $kode_customer = $get_customer['kode_customer'];
-$get_cart = mysqli_query($koneksi,"SELECT a.id, a.title, a.description, a.img, b.qty, a.color, a.size, a.price, a.price*b.qty as total_per_item from keranjang b, product a where a.id = b.id_product and id_user='$id_user'");
+$get_cart = mysqli_query($koneksi,"SELECT a.id, a.title, a.description, a.img, b.qty, a.size, a.price, a.price*b.qty as total_per_item from keranjang b, product a where a.id = b.id_product and id_user='$id_user'");
 $get_grand_total = mysqli_fetch_array(mysqli_query($koneksi,"SELECT sum(b.qty*a.price) total from keranjang b, product a where a.id=b.id_product and b.id_user='$id_user'"));
 $count_item = mysqli_num_rows($get_cart);
 $get_alamat_customer = mysqli_fetch_assoc(mysqli_query($koneksi,"SELECT provinsi,kota,kecamatan,kelurahan,alamat,no_telp from customer where kode_customer='$kode_customer'"));
@@ -16,7 +16,7 @@ $get_alamat_customer = mysqli_fetch_assoc(mysqli_query($koneksi,"SELECT provinsi
         padding:30px 50px
     }
 </style>
-<section class="h-100 gradient-custom">
+<section class="h-100 gradient-custom mb-3">
     <div class="container">
         <div class="row d-flex justify-content-center">
             <div class="col-md-8">
@@ -43,7 +43,6 @@ $get_alamat_customer = mysqli_fetch_assoc(mysqli_query($koneksi,"SELECT provinsi
                                 <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
                                     <!-- Data -->
                                     <p><strong><?= $prd['title'] ?></strong></p>
-                                    <p>Color: <?= $prd['color']?></p>
                                     <p>Size: <?= $prd['size']?></p>
                                     <p>Price: <?= "IDR ".number_format($prd['price'])?></p>
                                     <button type="button" class="btn btn-light btn-sm me-1 mb-2" data-mdb-toggle="tooltip" title="Remove item" onclick="removeCart(<?=$prd['id']?>)">
@@ -106,7 +105,7 @@ $get_alamat_customer = mysqli_fetch_assoc(mysqli_query($koneksi,"SELECT provinsi
             <div class="card-body">
                 <strong>Shipment : </strong>
                 <select class="form-control" id="shipment">
-                    <option value="1">Pengiriman</option>
+                    <option value="1">Kirim</option>
                     <option value="0">Ambil ditempat</option>
                 </select>
                 <hr>
@@ -179,7 +178,7 @@ $get_alamat_customer = mysqli_fetch_assoc(mysqli_query($koneksi,"SELECT provinsi
             </ul>
 
             <?php if($count_item > 0){ ?>
-            <a onclick='checkout()' class="btn btn-primary btn-lg btn-block text-white">
+            <a onclick='clickCheckout()' class="btn btn-primary btn-lg btn-block text-white">
               Go to checkout
             </a>
             <?php }else{?>
@@ -193,6 +192,53 @@ $get_alamat_customer = mysqli_fetch_assoc(mysqli_query($koneksi,"SELECT provinsi
     </div>
   </div>
 </section>
+
+<div class="modal fade" id="modal_pembayaran" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Pembayaran</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+          <div class="card text-white bg-light mb-3">
+            <div class="card-body">
+                <h5 class="card-title text-muted">BCA - 930928162 a/n PT. Perwira Steel</h5>
+                <p class="card-text text-muted" style="font-size:12px">Setiap transaksi pembayaran melalui Transfer Bank dianggap
+syah dengan mengatas namakan PT. Perwira Steel dengan rekening seperti diatas. Kami tidak bertanggung jawab atas transaksi yang mengatas namakan akun
+lain selain akun resmi perusahaan.</p>
+            </div>
+            </div>
+                <form id="form-transfer">
+        <div class="md-form mb-2">
+          <label for="rekening">No. Rekening</label>
+          <input type="text" id="rekening" name="rekening" class="form-control">
+        </div>
+        <div class="md-form mb-2">
+          <label for="bank">Bank</label>
+          <input type="text" id="bank" name="bank" class="form-control">
+        </div>
+        <div class="md-form mb-2">
+          <label for="nama">Nama</label>
+          <input type="text" id="nama" name="nama" class="form-control">
+        </div>
+        <div class="md-form mb-2">
+          <label for="bukti_transfer">Bukti Transfer</label>
+          <input type="file" id="bukti_transfer" name="bukti_transfer" class="form-control">
+        </div>
+            </form>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button class="btn btn-primary" onclick="checkout()">Upload</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <?php require_once "../layout/footer.php" ?>
 <script type="text/javascript">
 
@@ -212,6 +258,9 @@ $get_alamat_customer = mysqli_fetch_assoc(mysqli_query($koneksi,"SELECT provinsi
         if (payment == 'Cash') {
             $("#detail-transfer").hide()   
         }else{
+            totalnya= $("#grand_total").html();
+            console.log(totalnya);
+            $("#modal_total").val(totalnya);
             $("#detail-transfer").show()
         }
     })
@@ -252,6 +301,15 @@ $get_alamat_customer = mysqli_fetch_assoc(mysqli_query($koneksi,"SELECT provinsi
             }
 
         })
+    }
+
+    function clickCheckout(){
+        var payment = $("#payment").val();
+        if (payment == 'Cash') {
+            checkout();
+        }else{
+            $("#modal_pembayaran").modal('show');
+        }
     }
 
     function getResume(){
@@ -337,13 +395,17 @@ $get_alamat_customer = mysqli_fetch_assoc(mysqli_query($koneksi,"SELECT provinsi
     function checkout(){
         var shipment = $("#shipment").val();
         var payment = $("#payment").val();
+        var formData = new FormData($("#form-transfer")[0]);
+       formData.append("shipment", shipment);
+       formData.append("payment", payment);
+
         $.ajax({
             url : '../process/saveTransaction.php',
             type : 'POST',
-            data : {
-                shipment : shipment,
-                payment : payment,
-            },
+            processData: false,
+            contentType: false,
+            data : formData,
+            
             dataType : 'JSON',
             success : function(response){
                 console.log(response);

@@ -10,7 +10,7 @@ $get_other_product = mysqli_query($koneksi,"SELECT * from product where id != '$
         padding:30px 50px
     }
 </style>
-<div class="container">
+<div class="container mb-3">
     <div class="row">
         <div class="col-9 col-md-9 col-xs-12">
             <div class="card">
@@ -106,7 +106,7 @@ $get_other_product = mysqli_query($koneksi,"SELECT * from product where id != '$
                         timer: 2000,
                         showConfirmButton : false
                     }).then((result) => {
-                        window.location.href = "keranjang.php";
+                        window.location.reload();
                     })
                 }
             }

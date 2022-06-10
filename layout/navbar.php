@@ -54,6 +54,9 @@ if ($_SESSION['level']==2) {
       <li class="nav-item">
         <a class="nav-link" href="form_product.php">Product</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="customer.php">Customer</a>
+      </li>
     </ul>
   </div> 
     <ul class="navbar-nav">

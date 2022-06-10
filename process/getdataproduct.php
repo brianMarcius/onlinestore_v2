@@ -9,7 +9,6 @@ while ($r = mysqli_fetch_array($query)) {
                     <td>".$i++."</td>
                     <td>".$r['title']."</td>
                     <td>".$r['description']."</td>
-                    <td>".$r['color']."</td>
                     <td>".$r['size']."</td>
                     <td>".$r['satuan']."</td>
                     <td>".$r['img']."</td>

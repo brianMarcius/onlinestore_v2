@@ -19,7 +19,6 @@ require_once('../layout/navbar.php');
                                             <th>#</th>
                                             <th>Title</th>
                                             <th>Description</th>
-                                            <th>Color</th>
                                             <th>Size</th>
                                             <th>Satuan</th>
                                             <th>Img</th>
@@ -57,10 +56,6 @@ require_once('../layout/navbar.php');
 
                     <div class="form-outline mb-4">
                         <textarea class="form-control" rows="5" placeholder="description" name="description" id="description"></textarea>
-                    </div>
-
-                    <div class="form-outline mb-4">
-                        <input class="form-control" type="text" id="color" name="color" placeholder="color"/>
                     </div>
 
                     <div class="form-outline mb-4">

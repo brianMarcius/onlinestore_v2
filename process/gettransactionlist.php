@@ -13,7 +13,7 @@ if ($level == 2) {
 if ($search != '') {
     $filter_search = " and (a.kode_jual like '%$search%' or b.customer_name like '$search' or a.tanggal_jual = '$search')";
 }
-$sql = "SELECT a.kode_jual, a.kode_customer, b.customer_name, b.email, b.no_telp, concat(b.alamat,', Kel. ',b.kelurahan,', Kec. ',b.kecamatan,', ',b.kota,', ',b.provinsi) alamat, a.total, a.ppn, a.ongkir, a.grand_total, a.tanggal_jual from penjualan_header a, customer b where a.kode_customer=b.kode_customer $filter_customer $filter_search";
+$sql = "SELECT a.kode_jual, a.kode_customer, b.customer_name, b.email, b.no_telp, concat(b.alamat,', Kel. ',b.kelurahan,', Kec. ',b.kecamatan,', ',b.kota,', ',b.provinsi) alamat, a.total, a.ppn, a.ongkir, a.grand_total, a.tanggal_jual from penjualan_header a, customer b where a.kode_customer=b.kode_customer and a.status_pengiriman=1 $filter_customer $filter_search";
 $query =mysqli_query($koneksi,$sql);
 $html = '';
 while ($d = mysqli_fetch_array($query)) {

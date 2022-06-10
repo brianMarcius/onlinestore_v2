@@ -3,16 +3,15 @@ include '../config/koneksi.php';
 $id = $_POST['id'];
 $title = $_POST['title'];
 $description = $_POST['description'];
-$color = $_POST['color'];
 $size = $_POST['size'];
 $satuan = $_POST['satuan'];
 $price = $_POST['price'];
 
 if (empty($id)) {
-    $query = mysqli_query($koneksi,"INSERT INTO product(title,description,color,size,price,satuan) VALUES('$title', '$description','$color','$size','$price','$satuan')");
+    $query = mysqli_query($koneksi,"INSERT INTO product(title,description,size,price,satuan) VALUES('$title', '$description','$size','$price','$satuan')");
     $id = mysqli_insert_id($koneksi);
 }else{
-    $query = mysqli_query($koneksi,"UPDATE product set title='$title', description='$description', color='$color', size='$size', satuan='$satuan', price = $price where id='$id'");
+    $query = mysqli_query($koneksi,"UPDATE product set title='$title', description='$description', size='$size', satuan='$satuan', price = $price where id='$id'");
 }
 
    if(!empty($_FILES['img']['name'])){
