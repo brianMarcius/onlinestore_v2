@@ -59,13 +59,6 @@ require_once('../layout/navbar.php');
                     </div>
 
                     <div class="form-outline mb-4">
-<<<<<<< HEAD
-=======
-                        <input class="form-control" type="text" id="color" name="color" placeholder="color"/>
-                    </div>
-
-                    <div class="form-outline mb-4">
->>>>>>> cff93e8d194ac85e7864dbce1bb32f755c738b97
                         <input class="form-control" type="text" id="size" name="size" placeholder="size"/>
                     </div>
 
@@ -100,7 +93,9 @@ require_once('../layout/navbar.php');
 
     function launchModal(type, id = null){
         if (type == 'add') {
-            $("#modal_product").modal('show');            
+            $("#modal_product").modal('show');     
+            $('#form_product')[0].reset();
+       
         }else{
             $.ajax({
                 url : '../process/detailproduct.php',

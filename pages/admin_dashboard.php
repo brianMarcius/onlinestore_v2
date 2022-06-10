@@ -77,7 +77,7 @@ require_once('../layout/navbar.php');
                             <a class="nav-link active" id="pengiriman-tab" data-toggle="tab" role="tab" aria-controls="pengiriman" aria-selected="true" href="#data-pengiriman">Pengiriman</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="penjualan-tab" data-toggle="tab" role="tab" aria-controls="penjualan" aria-selected="true" href="#data-penjualan">Selesai</a>
+                            <a class="nav-link" id="penjualan-tab" data-toggle="tab" role="tab" aria-controls="penjualan" aria-selected="true" href="#data-penjualan" onclick="getDataPenjualan()">Selesai</a>
                         </li>
                         
                     </ul>
@@ -91,6 +91,7 @@ require_once('../layout/navbar.php');
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
+                                                    <th>Invoice</th>
                                                     <th>Customer</th>
                                                     <th>Tanggal</th>
                                                     <th class="text-right">Grand Total</th>
@@ -110,6 +111,7 @@ require_once('../layout/navbar.php');
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
+                                                    <th>Invoice</th>
                                                     <th>Customer</th>
                                                     <th>No Telp</th>
                                                     <th>Alamat</th>
@@ -270,7 +272,7 @@ require_once('../layout/navbar.php');
                 search:search,
             },
             success:function(result){
-                $("#tbody_data_penjualan").append(result);
+                $("#tbody_data_penjualan").html(result);
                 $("#table_penjualan").DataTable();
 
             },
