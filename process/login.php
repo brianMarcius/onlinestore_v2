@@ -5,11 +5,11 @@ $pass = base64_encode($_POST['pass']);
 
 $user = mysqli_fetch_array(mysqli_query($koneksi,"SELECT * from users where (email='$email' or username='$email') and password='$pass'"));
 $user['kode_customer'] = '';
-if ($user['level']==2) {
-    $get_customer = mysqli_fetch_array(mysqli_query($koneksi,"SELECT * from customer where id_user='".$user['id']."'"));
-    $user['kode_customer'] = $get_customer['kode_customer'];
-}
-if (!empty($user)) {
+if (isset($user['id'])) {
+    if ($user['level']==2) {
+        $get_customer = mysqli_fetch_array(mysqli_query($koneksi,"SELECT * from customer where id_user='".$user['id']."'"));
+        $user['kode_customer'] = $get_customer['kode_customer'];
+    }
     session_start();
     $_SESSION['username'] = $user['username'];
     $_SESSION['fullname'] = $user['fullname'];
