@@ -315,6 +315,7 @@ require_once('../layout/navbar.php');
         })
     }
 
+
     function addCommas(nStr)
     {
         nStr += '';

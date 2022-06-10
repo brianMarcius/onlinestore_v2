@@ -106,7 +106,11 @@ $get_other_product = mysqli_query($koneksi,"SELECT * from product where id != '$
                         timer: 2000,
                         showConfirmButton : false
                     }).then((result) => {
+<<<<<<< HEAD
                         window.location.reload();
+=======
+                        window.location.href = "keranjang.php";
+>>>>>>> cff93e8d194ac85e7864dbce1bb32f755c738b97
                     })
                 }
             }
