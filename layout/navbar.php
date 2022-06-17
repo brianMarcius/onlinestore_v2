@@ -12,6 +12,7 @@ if ($_SESSION['level']==2) {
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <div class="d-flex justify-content-between" style="width:100%">
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" href="allproduct.php">Product<sup><span class="badge badge-danger">New</span></sup></a>
@@ -20,7 +21,6 @@ if ($_SESSION['level']==2) {
         <a class="nav-link" href="transactionlist.php">Transaction</a>
       </li>
     </ul>
-  </div> 
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" href="keranjang.php"><i class="fa fa-shopping-cart"></i><?php if ($count_item>0) { ?><sup><span class="badge badge-danger"><?= $count_item ?></span></sup><?php } ?></a>
@@ -41,6 +41,9 @@ if ($_SESSION['level']==2) {
         </div>
       </li>
     </ul>
+</div>
+  </div> 
+
 </nav>
 <?php
 }else{ ?>

@@ -136,13 +136,7 @@ $get_alamat_customer = mysqli_fetch_assoc(mysqli_query($koneksi,"SELECT provinsi
                 <hr>
                 <div id="detail-transfer" class="slideanim">
                     <p><strong>We accept</strong></p>
-                    <i class="fa fa-cc-visa" style="font-size:30px"></i>
-                    &nbsp;
-                    <i class="fa fa-cc-paypal" style="font-size:30px"></i>
-                    &nbsp;
-                    <i class="fa fa-cc-amex" style="font-size:30px"></i>
-                    &nbsp;
-                    <i class="fa fa-credit-card" style="font-size:30px"></i>
+                    <p><i class="fa fa-credit-card" style="font-size:30px"></i> &nbsp;&nbsp;BCA - 930928162 a/n PT. Perwira Steel</p>
                 </div>
           </div>
         </div>
@@ -396,9 +390,14 @@ lain selain akun resmi perusahaan.</p>
         var shipment = $("#shipment").val();
         var payment = $("#payment").val();
         var formData = new FormData($("#form-transfer")[0]);
+        var nama = $('#nama').val().trim();
+        var bank = $('#bank').val().trim();
+        var rekening = $('#rekening').val().trim();
+        var file = $('input[type="file"]').val().trim();
        formData.append("shipment", shipment);
        formData.append("payment", payment);
 
+       if (nama && bank && rekening && file) {
         $.ajax({
             url : '../process/saveTransaction.php',
             type : 'POST',
@@ -422,6 +421,17 @@ lain selain akun resmi perusahaan.</p>
                 }
             }
         })
+        }else{
+            Swal.fire({
+                icon: 'warning',
+                title: 'Invalid',
+                text: 'Field tidak boleh kosong',
+                timer: 2000,
+                showConfirmButton : false
+            }).then((result) => {
+
+            })
+        }
 
     }
 

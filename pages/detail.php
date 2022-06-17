@@ -12,14 +12,14 @@ $get_other_product = mysqli_query($koneksi,"SELECT * from product where id != '$
 </style>
 <div class="container mb-3">
     <div class="row">
-        <div class="col-9 col-md-9 col-xs-12">
+        <div class="col-md-9 col-sm-12 mb-3">
             <div class="card">
                 <div class="card-header py-3">
                     <h5 class="mb-0">Product Detail</h5>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-5 col-md-5 col-xs-12" style="overflow:hidden">
+                        <div class="col-md-5 col-xs-12" style="overflow:hidden">
                             <div class="card">
                                 <div style="height:300px;overflow:hidden">
                                     <img class="card-img-top" src="../img/<?=$get_product['img']?>"  alt="Card image cap">
@@ -31,7 +31,7 @@ $get_other_product = mysqli_query($koneksi,"SELECT * from product where id != '$
                                 </div>
                             </div>                        
                         </div>
-                        <div class="col-7 col-md-7 col-xs-12">
+                        <div class="col-md-7 col-xs-12 p-4">
                             <?php foreach($get_product as $key => $value){ 
                                 if ($key !== 'id' && $key !=='img') { ?>
                                 <h4 class="card-title"><?= ucwords($key) ?></h4>
@@ -42,7 +42,7 @@ $get_other_product = mysqli_query($koneksi,"SELECT * from product where id != '$
                 </div>
             </div>
         </div>
-        <div class="col-3 col-md-3 col-xs-12">
+        <div class="col-md-3 col-xs-12">
             <div class="card">
                 <div class="card-header py-3">
                     <h5 class="mb-0">Product Lainnya</h5>
