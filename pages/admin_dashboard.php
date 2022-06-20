@@ -136,6 +136,7 @@ require_once('../layout/navbar.php');
                                                     <th>Invoice</th>
                                                     <th>Customer</th>
                                                     <th>Tanggal</th>
+                                                    <th>Status</th>
                                                     <th class="text-right">Grand Total</th>
                                                     <th></th>
                                                 </tr>
@@ -286,7 +287,7 @@ require_once('../layout/navbar.php');
 
 <div class="modal fade" id="modal_pengiriman" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
         <h4 class="modal-title w-100 font-weight-bold">Pengiriman</h4>
@@ -324,19 +325,43 @@ require_once('../layout/navbar.php');
                             <tr>
                                 <th><h5>Description</h5></th>
                                 <th><h5>Qty</h5></th>
-                                <th><h5>Satuan</h5></th>
+                                <th><h5>Amount</h5></th>
                             </tr>
                         </thead>
                         <tbody id="tbody_detail_kirim">
                             <tr>
                                 <td class="text-right" colspan=2>
+                                <p>
+                                    <strong>Total Amount: </strong>
+                                </p>
+                                <p>
+                                    <strong>Tax (11%): </strong>
+                                </p>
+							    <p>
+                                    <strong>Shipment: </strong>
+                                </p>
+							    </td>
+                                <td>
+                                <p class="text-right">
+                                    <strong><i class="fas fa-rupee-sign" area-hidden="true"></i> <span id="kirim_total"></span> </strong>
+                                </p>
+                                <p class="text-right">
+                                    <strong><i class="fas fa-rupee-sign" area-hidden="true"></i> <span id="kirim_ppn"></span> </strong>
+                                </p>
+							    <p class="text-right">
+                                    <strong><i class="fas fa-rupee-sign" area-hidden="true"></i> <span id="kirim_ongkir"></span>  </strong>
+                                </p>
+							    </td>
+                            </tr>
+                            <tr>
+                                <td class="text-right" colspan=2>
                                     <p>
-                                        <strong>Shipment: </strong>
+                                        <strong>Total: </strong>
                                     </p>
 							    </td>
                                 <td>
                                     <p class="text-right">
-                                        <strong><i class="fas fa-rupee-sign" area-hidden="true"></i> <span id="kirim_ongkir"></span>  </strong>
+                                        <strong><i class="fas fa-rupee-sign" area-hidden="true"></i> <span id="kirim_grand_total"></span>  </strong>
                                     </p>
 							    </td>
                             </tr>
@@ -355,7 +380,8 @@ require_once('../layout/navbar.php');
     </div>
       </div>
       <div class="modal-footer d-flex justify-content-center">
-        <button class="btn btn-primary" onclick="updatePengiriman()">Kirim</button>
+        <button class="btn btn-primary" id="dikirim" onclick="updatePengiriman()">Kirim</button>
+        <button class="btn btn-primary disabled" id="terkirim">Terkirim &nbsp; <i class="fa fa-check"></i></button>
       </div>
     </div>
   </div>
@@ -398,7 +424,7 @@ require_once('../layout/navbar.php');
 
     })
 
-    function modalPengiriman(kodejual){
+    function modalPengiriman(kodejual, status){
         $("#modal_pengiriman").modal('show');
         $.ajax({
             url : "../process/getdata_bukti_transfer.php",
@@ -412,7 +438,10 @@ require_once('../layout/navbar.php');
                 $("#kirim_alamat").html(response.alamat)
                 $("#kirim_no_telp").html(response.no_telp)
                 $("#kirim_email").html(response.email)
+                $("#kirim_total").html(addCommas(response.total))
+                $("#kirim_ppn").html(addCommas(response.ppn))
                 $("#kirim_ongkir").html(addCommas(response.ongkir))
+                $("#kirim_grand_total").html(addCommas(response.grand_total))
                 $("#kirim_kode_jual").html(response.kode_jual)
                 $("#kirim_kode_jual_val").val(response.kode_jual)
                 var html = "";
@@ -420,11 +449,18 @@ require_once('../layout/navbar.php');
                 for (let i = 0; i < response.detail.length; i++) {
                     html += "<tr>";
                     html += "<td class='col-md-6'>"+response.detail[i].title+"</td>";
-                    html += "<td class='col-md-3'>"+response.detail[0].qty+"</td>";
-                    html += "<td class='col-md-3'>"+response.detail[0].satuan+"</td>";
+                    html += "<td class='col-md-3'>"+response.detail[0].qty+" "+response.detail[0].satuan+"</td>";
+                    html += "<td class='col-md-3 text-right'>"+addCommas(response.detail[0].price)+"</td>";
                     html += "</tr>";
                 }
                 $("#tbody_detail_kirim").prepend(html);
+                if (status == 0) {
+                    $("#terkirim").hide()
+                    $("#dikirim").show()
+                }else{
+                    $("#terkirim").show()
+                    $("#dikirim").hide()
+                }
             }
         })
     }

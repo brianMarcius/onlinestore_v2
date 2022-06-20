@@ -418,6 +418,16 @@ lain selain akun resmi perusahaan.</p>
                         }).then((result) => {
                             window.location.href= 'resultPembelian.php?kode='+response.data.kode_jual;
                         })
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: response.title,
+                        text: response.message,
+                        timer: 3000,
+                        showConfirmButton : false
+                    }).then((result) => {
+
+                    })
                 }
             }
         })

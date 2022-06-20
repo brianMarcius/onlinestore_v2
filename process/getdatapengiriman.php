@@ -10,10 +10,10 @@ $no = 1;
 while ($d = mysqli_fetch_array($query)) {
     if ($d['status_pengiriman']==0) {
         $d['tgl_pengiriman'] = '<i class="text-muted">Waiting For Shipment</i>';
-        $status =  '<button class="btn btn-outline-info" onclick="modalPengiriman(\''.$d['kode_jual'].'\')"><i class="fa fa-truck" aria-hidden="true"></i></button>';
+        $status =  '<button class="btn btn-outline-info" onclick="modalPengiriman(\''.$d['kode_jual'].'\',0)"><i class="fa fa-truck" aria-hidden="true"></i></button>';
 
     }else{
-        $status =  '<button  class="btn btn-danger"><i class="fa fa-check"></i></button>';
+        $status =  '<button  class="btn btn-danger" onclick="modalPengiriman(\''.$d['kode_jual'].'\',1)"><i class="fa fa-check"></i></button>';
     }
     $html .= "<tr>
                     <td>".$no++."</td>

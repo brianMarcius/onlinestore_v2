@@ -18,11 +18,25 @@ $bank = $_POST['bank'];
 		    if($ukuran < 1044070){			
 			move_uploaded_file($file_tmp, '../img/bukti_transfer/'.$namafile);
 		    }else{
-			// echo 'UKURAN FILE TERLALU BESAR';
-		    }
+                        $data = [
+                                "code" => 500,
+                                "title" => "Failed Upload",
+                                "message" => "Ukuran foto terlalu besar, maximal ukuran 1Mb",
+                                "data" => []
+                        ];	
+                        echo json_encode($data);
+                        exit();	    
+                }
 	       }else{
-		// echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
-	       }
+                        $data = [
+                                "code" => 500,
+                                "title" => "Failed Upload",
+                                "message" => "Format gambar tidak didukung, pastikan upload file berextensi .png atau .jpg",
+                                "data" => []
+                        ];	
+                        echo json_encode($data);
+                        exit();	    	       
+                }
     }
 
 $now = date('Y-m-d H:i:s');
