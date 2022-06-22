@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 22, 2022 at 11:12 AM
+-- Generation Time: Jun 22, 2022 at 11:15 AM
 -- Server version: 10.3.35-MariaDB
 -- PHP Version: 7.4.29
 
@@ -38,18 +38,6 @@ CREATE TABLE `bukti_pembayaran` (
   `bukti_transfer` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `bukti_pembayaran`
---
-
-INSERT INTO `bukti_pembayaran` (`id`, `kode_jual`, `nominal`, `bank`, `nama`, `norek`, `bukti_transfer`, `created_at`) VALUES
-(16, 'INV220617074904', '916250.00', 'BCA', 'USER1', '09287381', 'delivery.png', '2022-06-17 19:49:04'),
-(17, 'INV220619122909', '783050.00', 'bca', 'test', '00000', '1ce6533620256079f2986a078336070e.jpg', '2022-06-19 12:29:09'),
-(18, 'INV220620085903', '749750.00', 'MANDIRI', 'ASA FEBRI NUR FITRIANI', '23456', 'SHSRMS KARINA 2.jpg', '2022-06-20 08:59:03'),
-(19, 'INV220620095951', '583250.00', 'bca', 'test', 'test', 'Screen Shot 2022-06-09 at 16.39.58.png', '2022-06-20 09:59:51'),
-(20, 'INV220620101357', '683150.00', 'bca', 'asdfasd', '09287381', 'delivery.png', '2022-06-20 10:13:57'),
-(21, 'INV220622040130', '666500.00', 'btn', 'siti', '23456', 'SKK - KARINA.jpg', '2022-06-22 04:01:30');
 
 -- --------------------------------------------------------
 
@@ -96,14 +84,6 @@ CREATE TABLE `keranjang` (
   `qty` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `keranjang`
---
-
-INSERT INTO `keranjang` (`id`, `id_user`, `id_product`, `qty`) VALUES
-(61, 8, '3', 1),
-(62, 8, '23', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -137,22 +117,6 @@ CREATE TABLE `penjualan_detail` (
   `price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `penjualan_detail`
---
-
-INSERT INTO `penjualan_detail` (`id`, `kode_jual`, `id_product`, `qty`, `price`) VALUES
-(67, 'INV220617074904', 1, 3, 75000),
-(68, 'INV220617074904', 2, 2, 75000),
-(69, 'INV220619122909', 3, 2, 90000),
-(70, 'INV220619122909', 2, 1, 75000),
-(71, 'INV220620085903', 1, 3, 75000),
-(72, 'INV220620095951', 1, 1, 75000),
-(73, 'INV220620101357', 3, 1, 90000),
-(74, 'INV220620101357', 1, 1, 75000),
-(75, 'INV220622040130', 2, 1, 75000),
-(76, 'INV220622040130', 1, 1, 75000);
-
 -- --------------------------------------------------------
 
 --
@@ -177,18 +141,6 @@ CREATE TABLE `penjualan_header` (
   `tgl_penerimaan` datetime DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `penjualan_header`
---
-
-INSERT INTO `penjualan_header` (`id`, `kode_jual`, `kode_customer`, `total`, `ppn`, `ongkir`, `grand_total`, `metode_bayar`, `status_pembayaran`, `tanggal_jual`, `pengiriman`, `status_pengiriman`, `tgl_pengiriman`, `status_penerimaan`, `tgl_penerimaan`, `created_at`) VALUES
-(42, 'INV220617074904', 'CS0011', 375000, 41250, 500000, '916250', 'Transfer', 1, '2022-06-17 19:50:08', '1', 1, '2022-06-17 19:50:08', 0, NULL, '2022-06-17 12:49:04'),
-(43, 'INV220619122909', 'CS0011', 255000, 28050, 500000, '783050', 'Transfer', 1, '2022-06-19 12:30:35', '1', 1, '2022-06-19 12:30:35', 0, NULL, '2022-06-19 05:29:09'),
-(44, 'INV220620085903', 'CS0011', 225000, 24750, 500000, '749750', 'Transfer', 0, '2022-06-20 01:59:03', '1', 0, NULL, 0, NULL, '2022-06-20 01:59:03'),
-(45, 'INV220620095951', 'CS0011', 75000, 8250, 500000, '583250', 'Transfer', 1, '2022-06-20 13:39:33', '1', 1, '2022-06-20 13:37:32', 1, '2022-06-20 20:39:33', '2022-06-20 02:59:51'),
-(46, 'INV220620101357', 'CS0011', 165000, 18150, 500000, '683150', 'Transfer', 1, '2022-06-20 10:20:03', '1', 1, '2022-06-20 10:20:03', 0, NULL, '2022-06-20 03:13:57'),
-(47, 'INV220622040130', 'CS0011', 150000, 16500, 500000, '666500', 'Transfer', 1, '2022-06-22 04:03:15', '1', 1, '2022-06-22 04:02:51', 1, '2022-06-22 11:03:15', '2022-06-21 21:01:30');
 
 -- --------------------------------------------------------
 
