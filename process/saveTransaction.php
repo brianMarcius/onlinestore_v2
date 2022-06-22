@@ -67,7 +67,7 @@ if ($insert_detail_penjualan) {
         $grand_total = $total + $tax + $ongkir;
         $shipment_date = date('Y-m-d',strtotime(date("Y-m-d") . "+2 days"));
         $insert_penjualan = mysqli_query($koneksi,"INSERT into penjualan_header(kode_jual,kode_customer,total,ppn,ongkir,grand_total,metode_bayar,tanggal_jual,pengiriman,tgl_pengiriman,created_at) values('$kodepenjualan','$kode_customer',$total,$tax,$ongkir,$grand_total,'$payment','$now','$shipment',null,'$now')");
-        // $insert_bukti_transfer=true;
+        $insert_bukti_transfer=true;
 
         if ($payment == 'Transfer') {
                 $insert_bukti_transfer = mysqli_query($koneksi,"INSERT into bukti_pembayaran(kode_jual,nominal,nama,norek,bank,bukti_transfer) value('$kodepenjualan',$grand_total,'$nama','$rekening','$bank','$namafile')");

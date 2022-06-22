@@ -397,14 +397,13 @@ lain selain akun resmi perusahaan.</p>
        formData.append("shipment", shipment);
        formData.append("payment", payment);
 
-       if (nama && bank && rekening && file) {
-        $.ajax({
+       if (payment == 'Cash') {
+           $.ajax({
             url : '../process/saveTransaction.php',
             type : 'POST',
             processData: false,
             contentType: false,
             data : formData,
-            
             dataType : 'JSON',
             success : function(response){
                 console.log(response);
@@ -431,16 +430,52 @@ lain selain akun resmi perusahaan.</p>
                 }
             }
         })
-        }else{
-            Swal.fire({
-                icon: 'warning',
-                title: 'Invalid',
-                text: 'Field tidak boleh kosong',
-                timer: 2000,
-                showConfirmButton : false
-            }).then((result) => {
+       }else{
+          if (nama && bank && rekening && file) {
+                $.ajax({
+                    url : '../process/saveTransaction.php',
+                    type : 'POST',
+                    processData: false,
+                    contentType: false,
+                    data : formData,
+                    
+                    dataType : 'JSON',
+                    success : function(response){
+                        console.log(response);
+                        if (response.code==200) {
+                            Swal.fire({
+                                    icon: 'success',
+                                    title: response.title,
+                                    text: response.message,
+                                    timer: 2000,
+                                    showConfirmButton : false
+                                }).then((result) => {
+                                    window.location.href= 'resultPembelian.php?kode='+response.data.kode_jual;
+                                })
+                        }else{
+                            Swal.fire({
+                                icon: 'error',
+                                title: response.title,
+                                text: response.message,
+                                timer: 3000,
+                                showConfirmButton : false
+                            }).then((result) => {
 
-            })
+                            })
+                        }
+                    }
+                })
+                }else{
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Invalid',
+                        text: 'Field tidak boleh kosong',
+                        timer: 2000,
+                        showConfirmButton : false
+                    }).then((result) => {
+
+                    })
+                } 
         }
 
     }
