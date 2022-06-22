@@ -74,7 +74,7 @@ if ($insert_detail_penjualan) {
         }
 
         
-        if ($insert_penjualan && $insert_bukti_transfer) {
+        if ($insert_penjualan) {
                 $delete_cart = mysqli_query($koneksi,"DELETE from keranjang where id_user='$id_user'");
                 $data = [
                         "code" => 200,
