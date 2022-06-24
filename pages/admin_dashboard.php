@@ -116,6 +116,7 @@ require_once('../layout/navbar.php');
                                                     <th>Invoice</th>
                                                     <th>Customer</th>
                                                     <th>Tanggal</th>
+                                                    <th>Metode Pembayaran</th>
                                                     <th class="text-right">Grand Total</th>
                                                     <th></th>
                                                 </tr>
@@ -260,18 +261,22 @@ require_once('../layout/navbar.php');
         </div>
         <div class="col-md-6 body-main border-0">
             <div class="md-form mb-2">
+                <label for="metode">Metode Bayar</label>
+                <input type="text" id="metode" name="metode" class="form-control" disabled>
+            </div>
+            <div class="md-form mb-2" id="nama_container">
                 <label for="nama">Nama</label>
                 <input type="text" id="nama" name="nama" class="form-control" disabled>
             </div>
-            <div class="md-form mb-2">
+            <div class="md-form mb-2" id="bank_container">
                 <label for="bank">Bank</label>
                 <input type="text" id="bank" name="bank" class="form-control" disabled>
             </div>
-            <div class="md-form mb-2">
+            <div class="md-form mb-2" id="rekening_container">
                 <label for="rekening">Rekening</label>
                 <input type="text" id="rekening" name="rekening" class="form-control" disabled>
             </div>
-            <div class="md-form mb-2">
+            <div class="md-form mb-2" id="bukti_transfer_container">
                 <label for="bukti_transfer">Bukti Transfer</label>
                 <img class="img-fluid" id="bukti_transfer">
             </div>
@@ -486,10 +491,17 @@ require_once('../layout/navbar.php');
                 $("#tanggal_jual").html(response.tanggal_jual)
                 $("#kode_jual").html(response.kode_jual)
                 $("#kode_jual_val").val(response.kode_jual)
-                $("#nama").val(response.nama)
-                $("#bank").val(response.bank)
-                $("#rekening").val(response.norek)
-                $("#bukti_transfer").attr('src',"../img/bukti_transfer/"+response.bukti_transfer)
+                $("#metode").val(response.metode_bayar)
+                $("#nama_container, #bank_container, #rekening_container, #bukti_transfer_container").hide();
+
+                if (response.metode_bayar == "Transfer") {
+                    $("#nama_container, #bank_container, #rekening_container, #bukti_transfer_container").show();
+                    $("#nama").val(response.nama)
+                    $("#bank").val(response.bank)
+                    $("#rekening").val(response.norek)
+                    $("#bukti_transfer").attr('src',"../img/bukti_transfer/"+response.bukti_transfer)
+                }
+                
                 var html = "";
                 console.log(response.detail);
                 for (let i = 0; i < response.detail.length; i++) {

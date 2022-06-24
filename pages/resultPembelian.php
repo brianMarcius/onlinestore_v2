@@ -37,8 +37,8 @@ $get_detail = mysqli_query($koneksi,"SELECT a.id_product, a.qty, a.price, b.titl
 
 <div class="container">
 
-<div class="page-header">
-    <h1>Invoice Template  </h1>
+<div class="page-header pt-3">
+    <h1>Invoice Penjualan  </h1>
 </div>
 
 
